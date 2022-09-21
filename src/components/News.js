@@ -5,6 +5,16 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 
 export class News extends Component {
+  static defaultProps = {
+    country: "in",
+    pageSize: 6, //this value will be in used when no values is passed from app.js
+    category: "general",
+  };
+   // static propTypes = {
+  //   country: PropTypes.string,
+  //   pageSize: PropTypes.number,
+  //   category: PropTypes.string,
+  // };
   constructor(props) {
     super(props);
     this.state = {
@@ -20,16 +30,22 @@ export class News extends Component {
  return string[0].toUpperCase() + string.substring(1);}
   async UpdatePge() {
     this.setState({loading:true});
+    this.props.progress(10);
     let data = await fetch(
       `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=30a1926b7373433faa37a25b326991d4&page=${this.state.page}&pageSize=${this.props.pageSize}`
     );
+    this.props.progress(30);
     let parsedData = await data.json();
     console.log(parsedData);
+    this.props.progress(70);
+    console.log(this.props.pageSize);
+    console.log(this.props.country)
     this.setState({
       articles: parsedData.articles,
       totalResults: parsedData.totalResults,
       loading: false,
     });
+    this.props.progress(100);
   }
   async componentDidMount() {
     this.UpdatePge();

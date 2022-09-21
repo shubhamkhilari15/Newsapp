@@ -4,7 +4,9 @@ export class NewsItem extends Component {
     let { urlToImage, title, description, url , author, date, source} = this.props;
     return (
       <div className="card">
-        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{left:'100%',zIndex:'1'}} >{source.slice(0,6)}</span>
+        <div>
+        <span className="badge rounded-pill bg-danger m-1" style={{display:'flex',justifyContent:'flex-end',position:'absolute' ,right:0}} >{source}</span>
+        </div>
         <img src={urlToImage} className="card-img-top" alt="..."  style={{height:'300px'}}/>
         <div className="card-body">
           <h5 className="card-title">{title.slice(0,45)}..</h5>
